@@ -1,5 +1,7 @@
 {
   "name": "controller-gen",
+  "version": "0.1.0",
+  "description": "Generador de codigo para servidores OData.",
   "repository": {
     "type": "git",
     "url": "https://github.com/paudr/controller-gen.git"
