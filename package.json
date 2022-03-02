@@ -1,5 +1,9 @@
 {
   "name": "controller-gen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paudr/controller-gen.git"
+  },
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
