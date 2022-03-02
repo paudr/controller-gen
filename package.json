@@ -4,6 +4,9 @@
     "type": "git",
     "url": "https://github.com/paudr/controller-gen.git"
   },
+  "bin": {
+    "controller-gen": "bin/controller-gen.js"
+  },
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
