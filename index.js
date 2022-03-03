@@ -26,12 +26,25 @@ async function readNamespace (solutionPath) {
 
 function getTables (edmx) {
   const entityTypes = edmx['edmx:Edmx']['edmx:Runtime'][0]['edmx:ConceptualModels'][0].Schema[0].EntityType
+  const associations = edmx['edmx:Edmx']['edmx:Runtime'][0]['edmx:ConceptualModels'][0].Schema[0].Association
   return entityTypes.map(entityType => ({
     name: entityType.$.Name,
     keys: entityType.Key.map(key => {
       const name = key.PropertyRef[0].$.Name
       const type = entityType.Property.find(prop => prop.$.Name === name).$.Type
       return { name, type }
+    }),
+    navigationProperties: entityType.NavigationProperty?.map(navigationProperty => {
+      const { Name, Relationship, FromRole, ToRole } = navigationProperty.$
+      const relationship = Relationship.substring(5)
+      return {
+        name: Name,
+        relationship: Relationship.substring(5),
+        fromRole: FromRole,
+        toRole: ToRole,
+        multiplicity: associations.find(association => association.$.Name === relationship)
+          .End.find(end => end.$.Role === ToRole).$.Multiplicity
+      }
     }),
     created: entityType.Property.find(prop => prop.$.Name.toUpperCase() === 'CREATED')?.$.Name,
     createdBy: entityType.Property.find(prop => prop.$.Name.toUpperCase() === 'CREATEDBY')?.$.Name,
